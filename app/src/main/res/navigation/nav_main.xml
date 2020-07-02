@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/fragment_first"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/fragment_first"
+        android:name="com.example.kotlintext.FirstFragment">
+        <action
+            android:id="@+id/action_fragment_first_to_fragment_second"
+            app:destination="@id/fragment_second" />
+        <action
+            android:id="@+id/action_fragment_first_to_fragment_black"
+            app:destination="@id/fragment_black" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_second"
+        android:label="fragment_second"
+        android:name="com.example.kotlintext.SecondFragment">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_black"
+        android:name="com.example.kotlintext.BlankFragment" />
+
+</navigation>

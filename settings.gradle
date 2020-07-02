@@ -1,0 +1,4 @@
+include ':lib'
+include ':Common'
+include ':app'
+rootProject.name = "KotlinText"
