@@ -28,12 +28,20 @@ import kotlinx.android.synthetic.main.activity_user_login.*
  * @description:
  */
 class LoginActivity : BaseActivity<LoginPresenterImpl>(), LoginView {
+    val isEmpty get() = 1111 == 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_login)
 
         user_login_bt.setOnClickListener(onClickListener)
         user_register_tv.setOnClickListener(onClickListener)
+        user_register_tv.setOnClickListener{
+            view ->
+            println("测试view:$view.id")
+        }
+
+
     }
 
     private val onClickListener = View.OnClickListener { view ->

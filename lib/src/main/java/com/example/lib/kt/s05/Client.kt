@@ -34,3 +34,8 @@ fun show(isLogin: Boolean, loginMethod: (Boolean)-> String) {
     }
 
 }
+
+
+fun show3(isLogin: Boolean,loginMethod:(Boolean)->Unit){
+
+}

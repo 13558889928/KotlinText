@@ -1,37 +1,43 @@
 package com.example.kotlintext.modules.collect
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlintext.R
 import com.example.kotlintext.base.BaseFragment
 import com.example.kotlintext.db.Student
+import com.example.kotlintext.modules.collect.inter.CollectPresenter
 import com.example.kotlintext.modules.collect.inter.CollectView
 import com.xiangxue.kotlinproject.adapter.CollectAdapter
+import com.xiangxue.kotlinproject.config.Flag
 import kotlinx.android.synthetic.main.fragment_collect.*
 
-class CollectFragment : BaseFragment<CollectPresenterImpl>(), CollectView {
+class CollectFragment : BaseFragment<CollectPresenter>(), CollectView {
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Toast.makeText(activity, "收藏", Toast.LENGTH_SHORT).show()
         val root: View? = inflater.inflate(R.layout.fragment_collect, container, false)
-        return root ?:   /* root null  就用后面的 */    super.onCreateView(
-            inflater,
-            container,
-            savedInstanceState
-        )
+        return root ?:   /* root null  就用后面的 */    super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    // 类似于  Java的构造代码块
+    init {
+        setHasOptionsMenu(true);
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //　TODO Insert　动作
         addData.setOnClickListener {
-            val names = arrayOf<String>(
+            val names = arrayOf<String> (
                 "乔峰",
                 "段誉",
                 "虚竹",
@@ -45,8 +51,7 @@ class CollectFragment : BaseFragment<CollectPresenterImpl>(), CollectView {
                 "王小二",
                 "李大奇"
             )
-
-            val ages = arrayOf(
+            val ages = arrayOf<Int> (
                 43,
                 24,
                 19,
@@ -60,30 +65,41 @@ class CollectFragment : BaseFragment<CollectPresenterImpl>(), CollectView {
                 45,
                 14
             )
-
             for (index in names.indices) {
                 val stu = Student(names[index], ages[index])
-                presenter.requestInsert(stu)
+                p.requestInsert(stu)
             }
         }
 
+        // TODO 全部删除动作
         clearData.setOnClickListener {
-            presenter.requestDeleteAll()
+            p.requestDeleteAll()
         }
     }
 
-    override fun createPresenter(): CollectPresenterImpl = CollectPresenterImpl(this)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.personal_menu, menu)
+    }
+
+    override fun getPresenter(): CollectPresenter = CollectPresenterImpl(this)
 
     override fun createOK() {
-        presenter.requestQueryAll()
+        p.requestQueryAll()
     }
 
     override fun recycle() {
-        presenter.unAttachView()
+        p.unAttachView()
     }
 
+
+    // 响应的结果
+
     override fun showResultSuccess(result: List<Student>?) {
-        recyclerView.layoutManager = LinearLayoutManager(getActivity())
+        Log.d(Flag.TAG, "showResultSuccess result: ${result.toString()} , LV:${recyclerView} ")
+
+        // 数据 给  recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(activity)
         val adapter = CollectAdapter()
         if (null != result) {
             adapter.allStudents = result
@@ -91,7 +107,8 @@ class CollectFragment : BaseFragment<CollectPresenterImpl>(), CollectView {
         recyclerView.adapter = adapter
     }
 
+    // 增删改的回馈   你已经做完 增删改了
     override fun showResult(result: Boolean) {
-        if (result) presenter.requestQueryAll()
+        if (result) p.requestQueryAll()
     }
 }

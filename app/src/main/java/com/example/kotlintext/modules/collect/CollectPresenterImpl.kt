@@ -1,38 +1,47 @@
 package com.example.kotlintext.modules.collect
 
 import com.example.kotlintext.db.Student
+import com.example.kotlintext.modules.collect.inter.CollectModel
 import com.example.kotlintext.modules.collect.inter.CollectPresenter
 import com.example.kotlintext.modules.collect.inter.CollectView
 
+
+// P impl
 class CollectPresenterImpl(var view: CollectView?) : CollectPresenter,
-    CollectPresenter.OnCollectResponseListener,
-    CollectPresenter.OnCollectListener {
+    CollectPresenter.OnCollectListener, CollectPresenter.OnCollectResponseListener {
 
-    var collectModelImpl: CollectModelImpl = CollectModelImpl()
+    private val modele: CollectModel = CollectModelImpl()
 
-    override fun requestInsert(vararg student: Student) {
-        collectModelImpl.requestInsert(this, *student)
+    // 插入
+    override fun requestInsert(vararg students: Student) {
+        modele.requestInsert(this, *students)
     }
 
-    override fun requestUpdate(vararg student: Student) {
-        collectModelImpl.requestUpdate(this, *student)
+    // 条件修改
+    override fun requestUpdate(vararg students: Student) {
+        modele.requestUpdate(this, *students)
     }
 
-    override fun requestDelete(vararg student: Student) {
-        collectModelImpl.requestDelete(this, *student)
+    // 添加删除
+    override fun requestDelete(vararg students: Student) {
+        modele.requestDelete(this, *students)
     }
 
+    // 删除全部
     override fun requestDeleteAll() {
-        collectModelImpl.requestDelete(this)
+        modele.requestDeleteAll(this)
     }
 
+    // 查询全部
     override fun requestQueryAll() {
-        collectModelImpl.requestDelete(this)
+        modele.requestQueryAll(this)
     }
 
     override fun unAttachView() {
         view = null
     }
+
+    // 结果
 
     override fun showResultSuccess(result: List<Student>?) {
         view?.showResultSuccess(result)

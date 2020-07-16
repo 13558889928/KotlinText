@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
  */
 abstract class BaseFragment<T : IBasePresenter> : Fragment() {
 
-    lateinit var presenter: T
+    lateinit var p: T
     lateinit var activity: AppCompatActivity
 
     override fun onAttach(context: Context) {
@@ -22,7 +22,7 @@ abstract class BaseFragment<T : IBasePresenter> : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = createPresenter()
+        p = getPresenter()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ abstract class BaseFragment<T : IBasePresenter> : Fragment() {
         createOK()
     }
 
-    abstract fun createPresenter(): T
+    abstract fun getPresenter(): T
 
     override fun onDestroy() {
         super.onDestroy()

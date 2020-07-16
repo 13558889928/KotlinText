@@ -6,13 +6,14 @@ import androidx.room.PrimaryKey
 
 @Entity
 class Student() {
+    // 主键，自动增长
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
+    var id: Int = 0
 
-    @ColumnInfo(name = "name")
+    @ColumnInfo(name = "name") // 可以加别名，优先级更高， 如果加了 就使用别名的名称
     lateinit var name: String
 
-    @ColumnInfo(name = "age")
+    @ColumnInfo(name = "age") // 可以加别名，优先级更高， 如果加了 就使用别名的名称
     var age: Int = 0
 
     constructor(name: String, age: Int) : this() {
