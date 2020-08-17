@@ -68,9 +68,36 @@ fun main() {
     //需求：我想打印 并且我还想返回值，啥都想要
     var m15 = { number: Int ->
         println("我想打印 $number")
-        number+ 1000//^lambda 有这个标记意味着可以做多重操作
+        number + 1000//^lambda 有这个标记意味着可以做多重操作
     }
 
     println("m15：${m15(88)}")
 
+//    var m16 = { number: Int, number2: Int -> number + number2 }
+//    var m17: (Int, Int) -> Unit = { a, b -> a + b }
+
+    // TODO: 2020/8/17 高阶登录需求
+
+    loginEngine("Derry", "123456");
 }
+
+fun loginEngine(userName: String, userPwd: String) {
+    loginService(userName, userPwd) { name, pwd ->
+        if (name == "Derry" && pwd == "123456") {
+            println("恭喜:${name}登录成功")
+        } else {
+            println("登录失败，请检查用户名 或 密码")
+        }
+    }
+}
+
+typealias RequestLogin = (String, String) -> Unit
+
+private fun loginService(userName: String, userPwd: String, requestLogin: RequestLogin) {
+    requestLogin(userName, userPwd)
+}
+
+
+
+
+

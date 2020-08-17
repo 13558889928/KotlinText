@@ -8,34 +8,22 @@ package com.example.lib.kt.s05
 
 fun main() {
     show(true) {
-        "dddd"
+        println("括号结果：$it")
     }
 }
 
 
-// TODO: 2020/6/27 loginMethod: (Boolean) ->Unit 
-/**
- * loginMethod: () ->Unit
- *
- * loginMethod 方法名
- *  () 方法的那个括号
- *   -> 方法体
- *   Unit == void
- */
-fun show(isLogin: Boolean, loginMethod: (Boolean)-> String) {
+//todo loginMethod:(Boolean) -> Unit
+//loginMethod 方法名
+//（Boolean）方法括号
+//-> 方法体  干活
+// Unit == void
+fun show(isLogin: Boolean, loginMethod: (Boolean) -> Unit) {
     if (isLogin) {
         println("登录成功")
-        val str = loginMethod(isLogin)
-        println(str)//->dddd
+        loginMethod(true)
     } else {
-        loginMethod
         println("登录失败")
-        loginMethod(isLogin)
+        loginMethod(false)
     }
-
-}
-
-
-fun show3(isLogin: Boolean,loginMethod:(Boolean)->Unit){
-
 }
