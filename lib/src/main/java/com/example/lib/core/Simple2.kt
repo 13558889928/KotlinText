@@ -1,5 +1,7 @@
 package com.example.lib.core
 
+import java.util.concurrent.TimeoutException
+
 val name: String = "Derry"
 val age: Int = 0
 
@@ -30,7 +32,9 @@ fun main() {
         println("我就是runnable任务")
     }
     onRun(true,runnable::run)
+
 }
+typealias ddd =Map<String,String>
 
 fun <T, R> T.myRun(m: () -> R): R = m()
 
